@@ -1,0 +1,143 @@
+'''
+                                          Experiment No : 3
+                              Aim: Implementation of BFS & DFS Algorithm.
+                                                                           
+                                                                           
+                                                                           NAME : PATEL MUSKAN KASIM SHAH.
+                                                                           ROLL NO : 22DCO04
+                                                                           Batch 01
+                                                                                          
+Theory:
+
+
+A) BFS Algorithm:
+Step 1:
+
+   Create a single member queue with root node.
+
+Step 2:
+
+   If first number of queue is GOAL then go to Step 5.
+  
+Step 3:
+
+   If not GOAL, 
+   then remove it from the queue and add to the list of visited nodes.
+   Consider its children, if any, which are not yet visited and add them into queue
+   from right end / rear end.
+
+Step 4:
+
+   If queue is not empty, then go to Step 2, else go to Step 6.
+  
+Step 5:
+
+   Print Success and Stop.
+  
+Step 6:
+
+   Print Failure and Stop.
+
+
+   
+  
+B) DFS Algorithm:
+
+Step 1:
+
+   Create a single member queue with root node.
+  
+Step 2:
+
+   If first member of queue is GOAL then go to Step 5.
+
+Step 3:
+
+
+   If not GOAL, then remove it from the queue and add to the list of visited nodes.
+   Consider its children if any  which are not yet visited and add then into queue from
+   front end / left end (LIFO).
+
+Step 4:
+
+    If queue is not empty thhen go to Step 2, else go to Step 6.
+   
+Step 5:
+
+   Print Success and stop.
+  
+Step 6:
+
+   Print Failure and stop.
+
+
+'''
+
+
+# Program:
+
+from collections import defaultdict
+
+def bfs(graph, start, goal):
+    visited = set()
+    queue = [[start]]
+    
+    while queue:
+        path = queue.pop(0)
+        node = path[-1]
+        
+        if node == goal:
+            return path
+        
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph[node]:
+                new_path = path + [neighbor]  # Create a new path for each neighbor
+                queue.append(new_path)
+    
+    return []
+
+def dfs(graph, start, goal):
+    visited = set()
+    stack = [[start]]
+    
+    while stack:
+        path = stack.pop()
+        node = path[-1]
+        
+        if node == goal:
+            return path
+        
+        if node not in visited:
+            visited.add(node)
+            for neighbor in reversed(graph[node]):
+                new_path = path + [neighbor]  # Create a new path for each neighbor
+                stack.append(new_path)
+    
+    return []
+
+# Example graph
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': [],
+    'F': []
+}
+
+start_node = 'A'
+goal_node = 'F'
+
+bfs_path = bfs(graph, start_node, goal_node)
+dfs_path = dfs(graph, start_node, goal_node)
+
+print("BFS Path:", "-".join(bfs_path))
+print("DFS Path:", "-".join(dfs_path))
+
+
+#OUTPUT:
+# PS C:\Users\ADMIN> & C:/Users/ADMIN/AppData/Local/Programs/Python/Python311/python.exe c:/Users/ADMIN/Downloads/Exp_2.py
+# BFS Path: A-B-C-D-E-F
+# DFS Path: A-B-D-E-C-F
+# PS C:\Users\ADMIN>
