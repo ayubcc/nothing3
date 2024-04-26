@@ -1,0 +1,82 @@
+'''
+                                          Experiment No : 6
+                              Aim: Implementation of Min and Max Algorithm.
+                                                                           
+                                                                           NAME : SOBAN WAJUDDIN MARUF
+                                                                           ROLL NO : 21CO58
+                                                                           Batch 03
+                                                                                           
+# Introduction
+This Python program demonstrates the use of the minimax algorithm to find the maximum score that a maximizing player can achieve in a binary tree of scores. The program takes user input for the scores array and calculates the optimal value by traversing the tree using the minimax algorithm.
+
+# Functions
+
+## `minimax(curDepth, nodeIndex, maxTurn, scores, targetDepth)`
+This recursive function implements the minimax algorithm to traverse the binary tree of scores. It evaluates the maximum or minimum value at each level based on whether it is the turn of the maximizing or minimizing player, respectively.
+
+- `curDepth`: Current depth of the tree.
+- `nodeIndex`: Index of the current node in the binary tree.
+- `maxTurn`: Boolean flag indicating whether it is the turn of the maximizing player.
+- `scores`: The array containing scores at each leaf node of the binary tree.
+- `targetDepth`: The target depth at which the algorithm should stop recursion.
+
+## `get_user_input()`
+This function prompts the user to input the number of elements in the scores array and the scores themselves. It returns the dynamically generated scores array.
+
+## `main()`
+The main function orchestrates the program's execution by calling the necessary functions. It retrieves user input for the scores array, calculates the tree depth, and then calls the `minimax` function to find the optimal value. The result is then printed to the console.
+
+# Usage
+1. Run the script.
+2. Enter the number of elements in the scores array.
+3. Input the scores one by one.
+4. The program will output the optimal value.
+
+'''
+
+
+# Program:
+import math
+
+def minimax(curDepth, nodeIndex, maxTurn, scores, targetDepth):
+    if curDepth == targetDepth:
+        return scores[nodeIndex]
+
+    if maxTurn:
+        return max(minimax(curDepth + 1, nodeIndex * 2, False, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1, False, scores, targetDepth))
+    else:
+        return min(minimax(curDepth + 1, nodeIndex * 2, True, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1, True, scores, targetDepth))
+
+def get_user_input():
+    scores = []
+    n = int(input("Enter the number of elements in the scores array: "))
+    for i in range(n):
+        score = int(input(f"Enter score {i + 1}: "))
+        scores.append(score)
+    return scores
+
+def main():
+    scores = get_user_input()
+    treeDepth = math.log2(len(scores))
+
+    print("The optimal value is:", end=" ")
+    print(minimax(0, 0, True, scores, treeDepth))
+
+if __name__ == "__main__":
+    main()
+
+
+'''
+Enter the number of elements in the scores array: 8
+Enter score 1: 2
+Enter score 2: 3
+Enter score 3: 4
+Enter score 4: 5
+Enter score 5: 6
+Enter score 6: 12
+Enter score 7: 3
+Enter score 8: 5
+The optimal value is: 5
+'''
